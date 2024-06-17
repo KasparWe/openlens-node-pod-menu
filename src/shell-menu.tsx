@@ -52,6 +52,9 @@ export class PodShellMenu extends React.Component<Renderer.Component.KubeObjectM
 
     if (pod.getSelectedNodeOs() === "windows") {
       commandParts.push("powershell");
+    } else if(pod.getName().includes("mystacksdev")){
+      const env = pod.getNs() === "default" ? "prod" : "staging";
+      commandParts.push(`sh -c "clear; /bin/chamber exec lawyaw/${env}/mystacksdev -- bash"`);
     } else {
       commandParts.push('sh -c "clear; (bash || ash || sh)"');
     }
